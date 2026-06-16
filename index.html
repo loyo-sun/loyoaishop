@@ -21,6 +21,7 @@
       <nav class="nav" aria-label="页面导航">
         <a href="#products">商品</a>
         <a href="#support">售后</a>
+        <button class="contact-nav-button" id="openContact" type="button">联系我</button>
       </nav>
     </header>
 
@@ -31,7 +32,17 @@
             <p class="section-kicker">Products</p>
             <h2 id="products-title">当前商品</h2>
           </div>
-          <div class="toolbar" id="categoryFilters" aria-label="商品分类筛选"></div>
+          <div class="toolbar" aria-label="商品筛选和排序">
+            <div class="filter-group" id="categoryFilters" aria-label="商品分类筛选"></div>
+            <label class="sort-control" for="priceSort">
+              <span>价格</span>
+              <select id="priceSort" aria-label="按价格排序">
+                <option value="default">默认排序</option>
+                <option value="asc">从低到高</option>
+                <option value="desc">从高到低</option>
+              </select>
+            </label>
+          </div>
         </div>
 
         <div class="product-grid" id="productGrid" aria-live="polite"></div>
@@ -53,11 +64,28 @@
           </div>
           <div>
             <h3>联系方式</h3>
-            <p id="contactInfo">微信 sunqing / QQ 877715322</p>
+            <button class="qr-card-button" id="openContactFromSupport" type="button" aria-label="查看联系二维码">
+              <img class="contact-qr-small" src="./qrcode.jpg" alt="联系我二维码" />
+            </button>
           </div>
         </div>
       </section>
     </main>
+
+    <div class="modal-backdrop" id="contactModal" hidden>
+      <section
+        class="contact-modal"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="contactModalTitle"
+      >
+        <button class="modal-close" id="closeContact" type="button" aria-label="关闭联系二维码">×</button>
+        <p class="section-kicker">Contact</p>
+        <h2 id="contactModalTitle">联系我</h2>
+        <img class="contact-qr-large" src="./qrcode.jpg" alt="联系我二维码" />
+        <p class="contact-hint">扫码添加微信咨询商品与售后。</p>
+      </section>
+    </div>
 
     <footer class="site-footer">
       <span>© <span id="year"></span> Loyo AI Shop</span>

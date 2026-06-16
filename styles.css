@@ -31,6 +31,10 @@ body {
   line-height: 1.5;
 }
 
+body.modal-open {
+  overflow: hidden;
+}
+
 a {
   color: inherit;
 }
@@ -79,8 +83,22 @@ a {
   font-size: 14px;
 }
 
-.nav a {
+.nav a,
+.contact-nav-button {
   text-decoration: none;
+}
+
+.contact-nav-button {
+  min-height: 38px;
+  padding: 0 16px;
+  color: #fff;
+  background: var(--green);
+  border: 1px solid var(--green);
+  border-radius: 8px;
+  cursor: pointer;
+  font: inherit;
+  font-weight: 850;
+  box-shadow: 0 10px 24px rgba(29, 122, 95, 0.2);
 }
 
 .section-kicker {
@@ -125,6 +143,14 @@ h2 {
 .toolbar {
   display: flex;
   flex-wrap: wrap;
+  gap: 12px;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.filter-group {
+  display: flex;
+  flex-wrap: wrap;
   gap: 10px;
   justify-content: flex-end;
 }
@@ -145,6 +171,36 @@ h2 {
   color: #fff;
   background: var(--green);
   border-color: var(--green);
+}
+
+.sort-control {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 38px;
+  padding-left: 12px;
+  color: var(--muted);
+  background: rgba(255, 255, 255, 0.42);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  font-size: 14px;
+  font-weight: 750;
+}
+
+.sort-control select {
+  height: 36px;
+  padding: 0 34px 0 10px;
+  color: var(--ink);
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+  font: inherit;
+  font-weight: 800;
+}
+
+.sort-control select:focus {
+  outline: 2px solid rgba(29, 122, 95, 0.28);
+  outline-offset: 2px;
 }
 
 .product-grid {
@@ -286,6 +342,81 @@ h2 {
   color: var(--muted);
 }
 
+.qr-card-button {
+  display: block;
+  width: min(180px, 100%);
+  padding: 8px;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.contact-qr-small,
+.contact-qr-large {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 6px;
+}
+
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 20;
+  display: grid;
+  place-items: center;
+  padding: 18px;
+  background: rgba(21, 21, 21, 0.48);
+}
+
+.modal-backdrop[hidden] {
+  display: none;
+}
+
+.contact-modal {
+  position: relative;
+  width: min(420px, 100%);
+  padding: 26px;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  box-shadow: var(--shadow);
+}
+
+.contact-modal h2 {
+  margin-bottom: 18px;
+  font-size: 34px;
+}
+
+.modal-close {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  display: grid;
+  width: 34px;
+  height: 34px;
+  place-items: center;
+  color: var(--ink);
+  background: #f0e9dc;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 24px;
+  line-height: 1;
+}
+
+.contact-qr-large {
+  max-width: 300px;
+  margin: 0 auto;
+}
+
+.contact-hint {
+  margin: 16px 0 0;
+  color: var(--muted);
+  text-align: center;
+}
+
 .site-footer {
   display: flex;
   align-items: center;
@@ -308,6 +439,12 @@ h2 {
 
   .toolbar {
     justify-content: flex-start;
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .filter-group {
+    justify-content: flex-start;
   }
 
   .product-grid,
@@ -326,6 +463,10 @@ h2 {
   .nav {
     width: 100%;
     justify-content: space-between;
+  }
+
+  .contact-nav-button {
+    padding: 0 12px;
   }
 
   .product-footer {

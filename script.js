@@ -45,13 +45,18 @@ const state = {
   products: fallbackProducts,
   categories: ["全部", "Gemini", "Open Ai"],
   activeCategory: "全部",
+  priceSort: "default",
 };
 
 const elements = {
   year: document.querySelector("#year"),
-  contactInfo: document.querySelector("#contactInfo"),
   productGrid: document.querySelector("#productGrid"),
   categoryFilters: document.querySelector("#categoryFilters"),
+  priceSort: document.querySelector("#priceSort"),
+  openContact: document.querySelector("#openContact"),
+  openContactFromSupport: document.querySelector("#openContactFromSupport"),
+  closeContact: document.querySelector("#closeContact"),
+  contactModal: document.querySelector("#contactModal"),
 };
 
 elements.year.textContent = new Date().getFullYear();
@@ -118,7 +123,12 @@ function renderFilters() {
 function renderProducts() {
   const products = state.products
     .map(normalizeProduct)
-    .filter((product) => state.activeCategory === "全部" || product.categoryName === state.activeCategory);
+    .filter((product) => state.activeCategory === "全部" || product.categoryName === state.activeCategory)
+    .sort((a, b) => {
+      if (state.priceSort === "asc") return Number(a.price || 0) - Number(b.price || 0);
+      if (state.priceSort === "desc") return Number(b.price || 0) - Number(a.price || 0);
+      return 0;
+    });
 
   elements.productGrid.innerHTML = "";
 
@@ -164,10 +174,19 @@ function escapeHtml(value = "") {
 }
 
 function applyShopInfo(shop) {
-  const contacts = [];
-  if (shop.contact_wechat) contacts.push(`微信 ${shop.contact_wechat}`);
-  if (shop.contact_qq) contacts.push(`QQ ${shop.contact_qq}`);
-  elements.contactInfo.textContent = contacts.length ? contacts.join(" / ") : "请通过商品详情页联系店铺客服";
+  fallbackShop.contact_wechat = shop.contact_wechat || fallbackShop.contact_wechat;
+  fallbackShop.contact_qq = shop.contact_qq || fallbackShop.contact_qq;
+}
+
+function openContactModal() {
+  elements.contactModal.hidden = false;
+  document.body.classList.add("modal-open");
+  elements.closeContact.focus();
+}
+
+function closeContactModal() {
+  elements.contactModal.hidden = true;
+  document.body.classList.remove("modal-open");
 }
 
 async function syncProducts() {
@@ -209,3 +228,18 @@ async function syncProducts() {
 }
 
 syncProducts();
+
+elements.priceSort.addEventListener("change", (event) => {
+  state.priceSort = event.target.value;
+  renderProducts();
+});
+
+elements.openContact.addEventListener("click", openContactModal);
+elements.openContactFromSupport.addEventListener("click", openContactModal);
+elements.closeContact.addEventListener("click", closeContactModal);
+elements.contactModal.addEventListener("click", (event) => {
+  if (event.target === elements.contactModal) closeContactModal();
+});
+document.addEventListener("keydown", (event) => {
+  if (event.key === "Escape" && !elements.contactModal.hidden) closeContactModal();
+});
