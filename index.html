@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="Loyo AI Shop - Cursor, Gemini, ChatGPT, Codex 等 AI 工具服务小店。"
+    />
+    <title>Loyo AI Shop</title>
+    <link rel="preconnect" href="https://pay.ldxp.cn" />
+    <link rel="preconnect" href="https://qn.ldxp.cn" />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="#top" aria-label="Loyo AI Shop 首页">
+        <span class="brand-mark">L</span>
+        <span class="brand-text">Loyo AI Shop</span>
+      </a>
+      <nav class="nav" aria-label="页面导航">
+        <a href="#products">商品</a>
+        <a href="#support">售后</a>
+      </nav>
+    </header>
+
+    <main id="top">
+      <section class="section products-section" id="products" aria-labelledby="products-title">
+        <div class="section-heading">
+          <div>
+            <p class="section-kicker">Products</p>
+            <h2 id="products-title">当前商品</h2>
+          </div>
+          <div class="toolbar" id="categoryFilters" aria-label="商品分类筛选"></div>
+        </div>
+
+        <div class="product-grid" id="productGrid" aria-live="polite"></div>
+      </section>
+
+      <section class="section support" id="support" aria-labelledby="support-title">
+        <div>
+          <p class="section-kicker">Support</p>
+          <h2 id="support-title">购买与售后</h2>
+        </div>
+        <div class="support-grid">
+          <div>
+            <h3>自动发货</h3>
+            <p>商品下单后自动交付卡密或充值信息。</p>
+          </div>
+          <div>
+            <h3>购买前确认</h3>
+            <p>请在商品详情页阅读使用范围、充值教程和售后条款后再下单。</p>
+          </div>
+          <div>
+            <h3>联系方式</h3>
+            <p id="contactInfo">微信 sunqing / QQ 877715322</p>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <span>© <span id="year"></span> Loyo AI Shop</span>
+    </footer>
+
+    <script src="./script.js"></script>
+  </body>
+</html>
