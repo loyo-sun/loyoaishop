@@ -64,12 +64,9 @@
     <main id="top">
       <section class="section products-section" id="products" aria-labelledby="products-title">
         <div class="section-heading">
-          <div>
+          <div class="product-title-block">
             <p class="section-kicker">Products</p>
             <h2 id="products-title">当前商品</h2>
-          </div>
-          <div class="toolbar" aria-label="商品筛选和排序">
-            <div class="filter-group" id="categoryFilters" aria-label="商品分类筛选"></div>
             <label class="sort-control" for="priceSort">
               <span>价格</span>
               <select id="priceSort" aria-label="按价格排序">
@@ -78,6 +75,9 @@
                 <option value="desc">从高到低</option>
               </select>
             </label>
+          </div>
+          <div class="toolbar" aria-label="商品筛选">
+            <div class="filter-group" id="categoryFilters" aria-label="商品分类筛选"></div>
           </div>
         </div>
 
