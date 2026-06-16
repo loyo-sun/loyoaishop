@@ -321,7 +321,7 @@ h2 {
 
 .support-grid {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 14px;
 }
 
@@ -342,17 +342,6 @@ h2 {
   color: var(--muted);
 }
 
-.qr-card-button {
-  display: block;
-  width: min(180px, 100%);
-  padding: 8px;
-  background: #fff;
-  border: 1px solid var(--line);
-  border-radius: 8px;
-  cursor: pointer;
-}
-
-.contact-qr-small,
 .contact-qr-large {
   display: block;
   width: 100%;

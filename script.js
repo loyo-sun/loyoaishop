@@ -54,7 +54,6 @@ const elements = {
   categoryFilters: document.querySelector("#categoryFilters"),
   priceSort: document.querySelector("#priceSort"),
   openContact: document.querySelector("#openContact"),
-  openContactFromSupport: document.querySelector("#openContactFromSupport"),
   closeContact: document.querySelector("#closeContact"),
   contactModal: document.querySelector("#contactModal"),
 };
@@ -235,7 +234,6 @@ elements.priceSort.addEventListener("change", (event) => {
 });
 
 elements.openContact.addEventListener("click", openContactModal);
-elements.openContactFromSupport.addEventListener("click", openContactModal);
 elements.closeContact.addEventListener("click", closeContactModal);
 elements.contactModal.addEventListener("click", (event) => {
   if (event.target === elements.contactModal) closeContactModal();
