@@ -221,6 +221,19 @@ h2 {
   box-shadow: 0 12px 34px rgba(37, 30, 18, 0.08);
 }
 
+.loading-state,
+.empty-state {
+  grid-column: 1 / -1;
+  min-height: 220px;
+  display: grid;
+  place-items: center;
+  color: var(--muted);
+  background: rgba(255, 250, 241, 0.76);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  font-weight: 800;
+}
+
 .product-media {
   position: relative;
   aspect-ratio: 1 / 0.76;

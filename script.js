@@ -1,5 +1,7 @@
 const SHOP_TOKEN = "AFIM6DK1";
 const API_BASE = "https://pay.ldxp.cn";
+const SITE_URL = "https://loyoaishop.vercel.app/";
+const SITE_NAME = "Loyo AI Shop";
 
 const fallbackShop = {
   nickname: "乐悦",
@@ -42,8 +44,8 @@ const fallbackProducts = [
 ];
 
 const state = {
-  products: fallbackProducts,
-  categories: ["全部", "Gemini", "Open Ai"],
+  products: [],
+  categories: ["全部"],
   activeCategory: "全部",
   priceSort: "default",
 };
@@ -56,6 +58,7 @@ const elements = {
   openContact: document.querySelector("#openContact"),
   closeContact: document.querySelector("#closeContact"),
   contactModal: document.querySelector("#contactModal"),
+  structuredData: document.querySelector("#structuredData"),
 };
 
 elements.year.textContent = new Date().getFullYear();
@@ -130,6 +133,12 @@ function renderProducts() {
     });
 
   elements.productGrid.innerHTML = "";
+  elements.productGrid.setAttribute("aria-busy", "false");
+
+  if (products.length === 0) {
+    elements.productGrid.innerHTML = '<div class="empty-state">暂无商品</div>';
+    return;
+  }
 
   products.forEach((product) => {
     const card = document.createElement("article");
@@ -157,6 +166,64 @@ function renderProducts() {
 
     elements.productGrid.append(card);
   });
+}
+
+function updateStructuredData() {
+  if (!elements.structuredData) return;
+
+  const products = state.products.map(normalizeProduct);
+  const itemList = products.map((product, index) => ({
+    "@type": "ListItem",
+    position: index + 1,
+    item: {
+      "@type": "Product",
+      name: product.name,
+      image: product.image,
+      description: product.summary,
+      category: product.categoryName,
+      url: product.link,
+      offers: {
+        "@type": "Offer",
+        price: Number(product.price || 0),
+        priceCurrency: "CNY",
+        availability: "https://schema.org/InStock",
+      },
+    },
+  }));
+
+  elements.structuredData.textContent = JSON.stringify(
+    [
+      {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        name: SITE_NAME,
+        url: SITE_URL,
+        inLanguage: "zh-CN",
+        description: "AI 工具卡密与充值服务小店。",
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "Store",
+        name: SITE_NAME,
+        url: SITE_URL,
+        description: fallbackShop.description,
+        image: "https://qn.ldxp.cn/54/16c9f45aa6adedd9537e76711bf552.png",
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "ItemList",
+        name: `${SITE_NAME} 商品列表`,
+        itemListElement: itemList,
+      },
+    ],
+    null,
+    2,
+  );
+}
+
+function renderLoadingState() {
+  elements.productGrid.setAttribute("aria-busy", "true");
+  elements.productGrid.innerHTML = '<div class="loading-state">商品加载中...</div>';
 }
 
 function escapeHtml(value = "") {
@@ -190,7 +257,7 @@ function closeContactModal() {
 
 async function syncProducts() {
   renderFilters();
-  renderProducts();
+  renderLoadingState();
 
   try {
     const [shopResult, categoryResult, goodsResult] = await Promise.all([
@@ -220,10 +287,17 @@ async function syncProducts() {
 
   } catch (error) {
     applyShopInfo(fallbackShop);
+    state.categories = ["全部", "Gemini", "Open Ai"];
+    state.products = fallbackProducts;
+  }
+
+  if (!state.categories.includes(state.activeCategory)) {
+    state.activeCategory = "全部";
   }
 
   renderFilters();
   renderProducts();
+  updateStructuredData();
 }
 
 syncProducts();
